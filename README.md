@@ -18,3 +18,4 @@ Lưu ý khi cài đặt TailwindCSS:
 6. Cài cookies vào folder api: npm install cookie-parser
 7. Cài thư viện hỗ trợ download ảnh vào folder api: npm install image-downloader
 8. Cài thêm thư viện hỗ trợ upload ảnh từ máy tính, cụ thể là middleware, chỉ định nơi lưu trữ: yarn add multer
+9. Cài thêm thư viện hỗ trợ xử lý ngày tháng vào folder client: npm install date-fns
