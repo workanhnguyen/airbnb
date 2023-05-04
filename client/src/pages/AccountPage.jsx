@@ -8,7 +8,7 @@ import { AccountNavigation } from "../components";
 
 const AccountPage = () => {
   const { user, setUser, ready } = useContext(UserContext);
-  let { subpage, action, id } = useParams();
+  let { subpage, action } = useParams();
 
   if (subpage === undefined) { subpage = "profile"; }
 

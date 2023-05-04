@@ -13,7 +13,7 @@ const PlacesPage = () => {
     axios.get("/places").then(({ data }) => {
       setPlaces(data);
     });
-  }, []);
+  }, [action]);
   
   return (
     <>
@@ -43,7 +43,7 @@ const PlacesPage = () => {
           </div>
           <div className="mt-4">
             {places.length > 0 && places.map(place => (
-              <Link to={'/account/places/detail/' + place._id} key={place._id} className="flex cursor-pointer gap-4 bg-gray-100 p-4 rounded-2xl mb-2">
+              <Link to={'/account/places/update/' + place._id} key={place._id} className="flex cursor-pointer gap-4 bg-gray-100 p-4 rounded-2xl mb-2">
                 <div className="w-32 h-32 bg-gray-300 shrink-0">
                   {place.photos.length > 0 && (
                     <img className="w-full h-full object-scale-down" src={IMAGE_LOAD_BASE_URL + '/' + place.photos[0]} alt="photo" />
@@ -58,7 +58,7 @@ const PlacesPage = () => {
           </div>
         </>
       )}
-      {(action === "new" || action === "detail") && (
+      {(action === "new" || action === "update") && (
         <div>
           <PlacesForm />
         </div>

@@ -13,12 +13,13 @@ const PlacesForm = () => {
   const [checkIn, setCheckIn] = useState('');
   const [checkOut, setCheckOut] = useState('');
   const [maxGuests, setMaxGuests] = useState(1);
+  const [price, setPrice] = useState(0);
   const navigate = useNavigate();
   const { id } = useParams();
 
   useEffect(() => {
     if (!id) return;
-    axios.get('/places/detail/' + id).then(res => {
+    axios.get('/places/update/' + id).then(res => {
       const { data } = res;
       setTitle(data.title);
       setAddress(data.address);
@@ -29,6 +30,7 @@ const PlacesForm = () => {
       setCheckIn(data.checkIn);
       setCheckOut(data.checkOut);
       setMaxGuests(data.maxGuests);
+      setPrice(data.price);
     })
   }, [id]);
 
@@ -46,7 +48,7 @@ const PlacesForm = () => {
       </>
     );
   };
-  const addNewPlace = async (e) => {
+  const savePlace = async (e) => {
     e.preventDefault();
 
     try {
@@ -60,15 +62,21 @@ const PlacesForm = () => {
         checkIn,
         checkOut,
         maxGuests,
+        price,
       };
-      await axios.post("/places", placeData);
+
+      if (id) {
+        await axios.put("/places", {id, ...placeData});
+      } else {
+        await axios.post("/places", placeData);
+      }
       navigate('/account/places', { replace: true })
     } catch (err) {}
   };
 
   return (
     <>
-      <form onSubmit={addNewPlace}>
+      <form onSubmit={savePlace}>
         {preInput(
           "Title",
           "Title for your place. Should be short and catchy as advertisement"
@@ -87,7 +95,7 @@ const PlacesForm = () => {
           placeholder="Address"
         />
         {preInput("Photos", "More is better")}
-        <PhotosUploader addedPhotos={addedPhotos} onChange={setAddedPhotos} />
+        <PhotosUploader addedPhotos={addedPhotos} setAddedPhotos={setAddedPhotos} />
         {preInput("Description", "Description of the place")}
         <textarea
           value={description}
@@ -106,7 +114,7 @@ const PlacesForm = () => {
           "Check in & out times",
           "Add check in and out times, remember to have some time window for cleaning the room between guests"
         )}
-        <div className="grid sm:grid-cols-3 gap-x-2.5">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-x-2.5">
           <div>
             <h3 className="mt-2 -mb-1">Check in time</h3>
             <input
@@ -131,6 +139,15 @@ const PlacesForm = () => {
               min={1}
               value={maxGuests}
               onChange={(e) => setMaxGuests(e.target.value)}
+            />
+          </div>
+          <div>
+            <h3 className="mt-2 -mb-1">Price per night</h3>
+            <input
+              type="number"
+              min={0}
+              value={price}
+              onChange={(e) => setPrice(e.target.value)}
             />
           </div>
         </div>
