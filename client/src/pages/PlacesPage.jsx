@@ -2,8 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 
-import { PlacesForm } from "../components";
-import { IMAGE_LOAD_BASE_URL } from "../constants";
+import { PlacesForm, PlaceImg } from "../components";
 
 const PlacesPage = () => {
   const [places, setPlaces] = useState([]);
@@ -45,9 +44,7 @@ const PlacesPage = () => {
             {places.length > 0 && places.map(place => (
               <Link to={'/account/places/update/' + place._id} key={place._id} className="flex cursor-pointer gap-4 bg-gray-100 p-4 rounded-2xl mb-2">
                 <div className="w-32 h-32 bg-gray-300 shrink-0">
-                  {place.photos.length > 0 && (
-                    <img className="w-full h-full object-scale-down" src={IMAGE_LOAD_BASE_URL + '/' + place.photos[0]} alt="photo" />
-                  )}
+                  <PlaceImg place={place} className='w-full h-full object-scale-down' />
                 </div>
                 <div className=" grow shrink">
                   <h2 className="text-xl font-bold">{place.title}</h2>

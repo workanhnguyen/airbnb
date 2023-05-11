@@ -11,6 +11,7 @@ require("dotenv").config();
 
 const User = require("./models/User");
 const Place = require("./models/Place");
+const Booking = require("./models/Booking");
 
 const app = express();
 
@@ -205,6 +206,42 @@ app.get('/show-places', async (req, res) => {
 app.get('/place/:id', async (req, res) => {
   const { id } = req.params;
   res.json(await Place.findById(id));
+})
+
+app.post('/bookings', (req, res) => {
+  const { token } = req.cookies;
+  const { 
+    place, 
+    checkIn, 
+    checkOut, 
+    numberOfGuests, 
+    name, 
+    phoneNumber,
+    price } = req.body;
+
+    jwt.verify(token, jwtSecret, {}, async (err, userData) => {
+      if (err) throw err;
+      const bookingDoc = await Booking.create({
+        owner: userData.id,
+        place, 
+        checkIn, 
+        checkOut, 
+        numberOfGuests, 
+        name, 
+        phoneNumber,
+        price,
+      });
+      res.json(bookingDoc);
+     ;
+    });
+})
+
+app.get('/bookings', (req, res) => {
+  const { token } = req.cookies;
+  jwt.verify(token, jwtSecret, {}, async (err, userData) => {
+    const { id } = userData;
+    res.json(await Booking.find({ owner: id }).populate('place'));
+  });
 })
 
 app.listen(4000);

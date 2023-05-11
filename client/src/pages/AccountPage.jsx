@@ -3,7 +3,7 @@ import { UserContext } from "../contexts/UserContext";
 import axios from "axios";
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { PlacesPage, ProfilePage } from "../pages";
+import { PlacesPage, ProfilePage, BookingsPage } from "../pages";
 import { AccountNavigation } from "../components";
 
 const AccountPage = () => {
@@ -20,6 +20,7 @@ const AccountPage = () => {
       <AccountNavigation subpage={subpage} />
       {subpage === "profile" && <ProfilePage user={user} setUser={setUser} />}
       {subpage === "places" && <PlacesPage action={action}/>}
+      {subpage === "bookings" && <BookingsPage />}
     </div>
   );
 };

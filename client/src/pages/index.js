@@ -5,3 +5,5 @@ export { default as AccountPage } from './AccountPage';
 export { default as PlacesPage } from './PlacesPage';
 export { default as ProfilePage } from './ProfilePage';
 export { default as PlaceDetailPage } from './PlaceDetailPage';
+export { default as BookingsPage } from './BookingsPage';
+export { default as BookingPage } from './BookingPage';
