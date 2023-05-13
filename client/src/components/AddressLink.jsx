@@ -3,7 +3,7 @@ import React from 'react';
 
 import { GOOGLE_MAP_QUERY } from "../constants";
 
-const AddressLink = ({ address, className='flex my-2 gap-1 block font-semibold underline' }) => {
+const AddressLink = ({ address, className='flex my-2 gap-1 font-semibold underline' }) => {
   return (
     <>
         <a
